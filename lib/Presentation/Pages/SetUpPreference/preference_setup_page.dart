@@ -1,13 +1,15 @@
-import 'dart:math';
-
+import 'package:adopbox/Bloc/Categories/categories_cubit.dart';
+import 'package:adopbox/Data/Model/Categories/categories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hive/hive.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 import 'package:dotted_line/dotted_line.dart';
-import '../../../Data/Model/Categories/categories.dart';
+import '../../../Service/LocalDataBase/localdata.dart';
 import '../../../Utils/RandomColor/random_color.dart';
 import '../../Widgets/Button/custom_btn.dart';
 import '../../Widgets/Card/PrefCard/prefer_card.dart';
@@ -23,38 +25,47 @@ class _PetSetupPageState extends State<PetSetupPage> {
   TextEditingController addressController= TextEditingController();
   ButtonState progressButtonState = ButtonState.idle;
 
-  List<String> pickedCategory=[];
+  List<Categories> pickedCategory=[];
 
-
-  addItem(Categories item) async {
-    print(item);
-    var box = await Hive.openBox<Categories>('categories');
-    box.add(item);
-    print(box);
-
+  String? token;
+  //storage instance
+  LocalDataGet _localDataGet = LocalDataGet();
+  getToken() async {
+    var tokenx = await _localDataGet.getData();
+    setState(() {
+      token = tokenx.get('token');
+      BlocProvider.of<CategoriesCubit>(context).getCategories(token);
+      // Logger().d(token);
+    });
   }
-  List _inventoryList = <Categories>[];
-  List get inventoryList => _inventoryList;
-  boxOpe()async{
-    var box = await Hive.openBox<Categories>('categories');
-    print("open");
-    _inventoryList = box.values.toList();
 
-    for(Categories d in _inventoryList){
-      print(d.name);
-    }
-    print(_inventoryList.length);
+  void getCureentLocationName()async {
+    var possition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    //location name
+    List<Placemark> placemarks = await placemarkFromCoordinates(possition.latitude, possition.longitude);
+    print(placemarks[0].name.toString());
+    setState(()  {
+      addressController.text=placemarks[0].street.toString()
+          +","+placemarks[0].locality.toString()+","+placemarks[0].postalCode.toString()
+          +","+placemarks[0].subLocality.toString()
+          +","+placemarks[0].subAdministrativeArea.toString();
+    });
   }
- @override
+
+
+
+
+  @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
-    boxOpe();
+    getToken();
+    getCureentLocationName();
   }
   @override
   Widget build(BuildContext context) {
-
-    // print(_inventoryList);
     return Container(
       color: Colors.white,
       child: SafeArea(
@@ -102,8 +113,8 @@ class _PetSetupPageState extends State<PetSetupPage> {
                                     margin: EdgeInsets.only(right: 16),
                                     child: PreferenceCard(
                                       color: RandomHexColor().colorRandom(),
-                                      title: 'Dog',
-                                      cardImg: SvgPicture.asset('assets/icons/dog.svg',color:Colors.white),
+                                      title: e.name,
+                                      cardImg: e.photo,
                                     ),
                                   );
                                 }).toList(),
@@ -129,30 +140,39 @@ class _PetSetupPageState extends State<PetSetupPage> {
                             ),
                           ),
                           const SizedBox(height: 10),
-                          GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 4,
-                                crossAxisSpacing: 42.0,
-                                mainAxisSpacing: 2.0,
-                                childAspectRatio: 5/5
-                            ),
-                            itemCount: 12,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: (){
-                                  setState(() {
-                                    if(pickedCategory.length<3){
-                                      pickedCategory.add("Dog");
-                                    }
-                                  });
-                                },
-                                child: PreferenceCard(
-                                  color: RandomHexColor().colorRandom(),
-                                  title: 'Dog',
-                                  cardImg: SvgPicture.asset('assets/icons/dog.svg',color:Colors.white),
+                          BlocBuilder<CategoriesCubit, CategoriesState>(
+                            builder: (context, state) {
+                              if(state is !CategoriesLoaded){
+                                return Center(child: CircularProgressIndicator(),);
+                              }
+                              final data=(state as CategoriesLoaded).categoriesResponse;
+                              return GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    crossAxisSpacing: 42.0,
+                                    mainAxisSpacing: 2.0,
+                                    childAspectRatio: 5/5
                                 ),
+                                itemCount: data!.category.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: (){
+                                      setState(() {
+                                        if(pickedCategory.length<3){
+                                          pickedCategory.add(data.category[index]);
+                                          // addressController.text="ssss";
+                                        }
+                                      });
+                                    },
+                                    child: PreferenceCard(
+                                      color: RandomHexColor().colorRandom(),
+                                      title: data.category[index].name,
+                                      cardImg: data.category[index].photo,
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),
@@ -173,17 +193,14 @@ class _PetSetupPageState extends State<PetSetupPage> {
                           ),
                           const SizedBox(height: 8),
                           MaterialTextField(
-                            lable:"Your address",readOnly: false,controller:addressController, prefIcon: Icon(Icons.mail,color: Colors.black.withOpacity(0.3),) ,
+                            lable:"Your address",readOnly: true,controller:addressController, prefIcon: Icon(Icons.map,color: Colors.black.withOpacity(0.3),) ,
                           ),
                           const SizedBox(height: 20),
                         ],
                       ),
                     ),
-                    pickedCategory.length<1?Container(): InkWell(
+                    addressController.text==""?Container(child: Text("getting your location please wait"),): pickedCategory.length<1?Container(): InkWell(
                         onTap: (){
-                          Categories categorieds=Categories(id: "sss",name: "dog",photo: "shshhs");
-                          addItem(categorieds);
-                          // print(Categories(id: "sss",name: "dog",photo: "shshhs"));
                           // Navigator.pushNamed(context, '/home');
                         },
                         child: CustomBtn()),

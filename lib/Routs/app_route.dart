@@ -1,11 +1,14 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Bloc/Categories/categories_cubit.dart';
 import '../Bloc/Login/login_cubit.dart';
 import '../Constants/Strings/app_strings.dart';
 import '../Presentation/Pages/Login/login_page.dart';
 import '../Presentation/Pages/Login/signup_page.dart';
+import '../Presentation/Pages/SetUpPreference/preference_setup_page.dart';
 import '../Presentation/Screens/SplashScreen/splash_screen.dart';
 
 
@@ -27,6 +30,12 @@ class AppRouter {
             builder: (BuildContext context) => BlocProvider(
               create: (context) => LoginCubit(),
               child: SignUpPage(),
+            ));
+      case SETUP_PREFERANCE:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => BlocProvider(
+              create: (context) => CategoriesCubit(),
+              child: PetSetupPage(),
             ));
 
       default:

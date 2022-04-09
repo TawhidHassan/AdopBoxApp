@@ -65,7 +65,8 @@ class _LoginPageState extends State<LoginPage> {
             );
           }else{
             loginDataSave?.storeTokenUserdata(users,data.token, data.user!.id, data.user!.name, data.user!.email, data.user!.role);
-            Navigator.pushReplacement(context, PageTransition(PetSetupPage()));
+            // Navigator.pushReplacement(context, PageTransition(PetSetupPage()));
+            Navigator.pushReplacementNamed(context, SETUP_PREFERANCE);
           }
         }
       },

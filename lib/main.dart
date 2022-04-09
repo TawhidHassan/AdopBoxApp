@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:adopbox/Bloc/Categories/categories_cubit.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<UserCubit>(
           create: (context) => UserCubit(),
+        ),BlocProvider<CategoriesCubit>(
+          create: (context) => CategoriesCubit(),
         ),
       ],
       child: MaterialApp(
@@ -62,7 +65,6 @@ class MyApp extends StatelessWidget {
 class MyHttpOverrides extends HttpOverrides{
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-
     return super.createHttpClient(context) ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

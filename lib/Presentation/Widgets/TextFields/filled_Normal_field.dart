@@ -32,7 +32,10 @@ class _FilledNormalFieldState extends State<FilledNormalField> {
           ).tr(),
           SizedBox(height: 10),
           Container(
-            color: Colors.grey.shade300.withOpacity(0.4),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade300.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(12)
+            ),
             child: TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {

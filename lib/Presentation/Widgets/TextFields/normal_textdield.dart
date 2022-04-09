@@ -15,9 +15,7 @@ class MaterialTextField extends StatelessWidget {
 
     return Container(
       height: 48,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      color: Colors.grey.shade300.withOpacity(0.4),
       child: TextFormField(
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -27,14 +25,13 @@ class MaterialTextField extends StatelessWidget {
         },
         readOnly: readOnly,
         controller: controller,
+        keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
+          hintText:lable,
           border: InputBorder.none,
-          labelText: lable,
-          labelStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,color: Colors.black.withOpacity(0.3)),
           prefixIcon: prefIcon,
           filled: true,
           fillColor: Color(0xFFFFDD99).withOpacity(0.4),
-          contentPadding:EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
         ),
       ),
     );

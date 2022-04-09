@@ -39,10 +39,9 @@ class _MaterialTextFieldState extends State<MaterialTextFieldPassword> {
         obscureText: _passwordVisible,
         controller: widget.controller,
         decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: widget.lable,
-          labelStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,color: Colors.black.withOpacity(0.3)),
+          hintText:widget.lable,
           prefixIcon: widget.prefIcon,
+          border: InputBorder.none,
           filled: true,
           fillColor: Color(0xFFFFDD99).withOpacity(0.4),
           suffixIcon: IconButton(
@@ -60,7 +59,6 @@ class _MaterialTextFieldState extends State<MaterialTextFieldPassword> {
               });
             },
           ),
-          contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
 
         ),
       ),

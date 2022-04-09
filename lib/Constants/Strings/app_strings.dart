@@ -16,13 +16,5 @@ const SIGNUP_PAGE = "/SIGNUP_PAGE";
 const FORGET_PASSWORD_PAGE = "/forget_pass_page";
 
 
-//attendance
-const MARK_ATTENDANCE = "mark_attendance";
-const ATTENDANCE_LIST = "list_attendance";
-
-//profile page
-const PROFILE_PAGE = "/profile_page";
-
-//attendance
-const ASSIGN_SCHOOL_LIST = "ASSIGN_SCHOOL_LIST";
-const ASSIGN_SCHOOL_DETAILS = "ASSIGN_SCHOOL_DETAILS";
+//setupApp
+const SETUP_PREFERANCE = "/SETUP_PREFERANCE";

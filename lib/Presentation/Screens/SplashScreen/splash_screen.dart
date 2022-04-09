@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../Constants/Strings/app_strings.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
+import '../../Pages/SetUpPreference/preference_setup_page.dart';
 import '../../main_screen.dart';
 
 
@@ -85,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     Timer(Duration(seconds: 4), () {
       setState(() {
         isLogin?
-        Navigator.pushReplacement(context, PageTransition(MainScreen())): Navigator.pushReplacementNamed(
+        Navigator.pushReplacement(context, PageTransition(PetSetupPage())): Navigator.pushReplacementNamed(
             context, LOGIN_PAGE);
         // isLogin?
         // Navigator.pushReplacement(context, PageTransition(MainScreen())):Navigator.pushReplacement(context, PageTransition(MainScreen()));
@@ -120,7 +121,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/icons/logo.png",height: 70,),
+                      Image.asset("assets/images/splash_mid.png",height: 70,),
 
                     ],
                   ),
@@ -137,7 +138,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
                 children: [
                   Text("Powered By",style: TextStyle(fontSize: 12),).tr(),
-                  SvgPicture.asset('assets/images/maaclogo.svg')
+                  // SvgPicture.asset('assets/images/maaclogo.svg')
                 ],
               ),
             ),

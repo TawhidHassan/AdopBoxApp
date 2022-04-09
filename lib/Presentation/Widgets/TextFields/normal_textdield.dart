@@ -5,40 +5,36 @@ import '../../../Constants/Colors/app_colors.dart';
 
 class MaterialTextField extends StatelessWidget {
   final String lable;
-  final String hintText;
+  final Icon prefIcon;
   final bool readOnly;
-  MaterialTextField({required this.lable,required this.controller, required this.hintText,required this.readOnly});
+   MaterialTextField({required this.lable,required this.controller,required this.readOnly,required this.prefIcon});
   TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
-    return TextFormField(
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Please fillup';
-        }
-        return null;
-      },
-
-      readOnly: readOnly,
-      controller: controller,
-      decoration: InputDecoration(
-        hintText: hintText,
-        labelText: lable,
-        contentPadding:
-        EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide:
-          BorderSide(color:textFieldBorder, width: 1.0),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide:
-          BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    return Container(
+      height: 48,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextFormField(
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Please fillup';
+          }
+          return null;
+        },
+        readOnly: readOnly,
+        controller: controller,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          labelText: lable,
+          labelStyle: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,color: Colors.black.withOpacity(0.3)),
+          prefixIcon: prefIcon,
+          filled: true,
+          fillColor: Color(0xFFFFDD99).withOpacity(0.4),
+          contentPadding:EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
         ),
       ),
     );

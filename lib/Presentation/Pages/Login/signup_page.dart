@@ -15,14 +15,16 @@ import '../../Widgets/TextFields/password_textdield.dart';
 import '../SetUpPreference/preference_setup_page.dart';
 
 
-class LoginPage extends StatefulWidget {
+class SignUpPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpPageState extends State<SignUpPage> {
   TextEditingController emilController= TextEditingController();
+  TextEditingController nameController= TextEditingController();
   TextEditingController passwordController= TextEditingController();
+  TextEditingController confirmPasswordController= TextEditingController();
   final _globalkey = GlobalKey<FormState>();
 
   late bool circule;
@@ -58,11 +60,6 @@ class _LoginPageState extends State<LoginPage> {
           if(data!.status=="fail"){
             // ignore: deprecated_member_use
             print(data.status);
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("User id and password are mismatched").tr(),
-              ),
-            );
           }else{
             loginDataSave?.storeTokenUserdata(users,data.token, data.user!.id, data.user!.name, data.user!.email, data.user!.role);
             Navigator.pushReplacement(context, PageTransition(PetSetupPage()));
@@ -97,46 +94,15 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children:[
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 180,
-                                child: Stack(
-                                  children: [
-                                    Positioned(
-                                      top:65,
-                                      left: 118,
-                                      child: Text(
-                                        "Login",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      left: 82,
-                                      bottom: 0,
-                                      top: 4,
-                                      child: Lottie.asset(
-                                        "assets/lottie/cat_anim.json",
-                                        height: 200,
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ),
+
                               MaterialTextField(lable:tr("Email"),readOnly: false,prefIcon: Icon(Icons.mail,color: Colors.black.withOpacity(0.3),), controller:emilController ,),
+                              const SizedBox(height: 12,),
+                              MaterialTextField(lable:tr("Name"),readOnly: false,prefIcon: Icon(Icons.mail,color: Colors.black.withOpacity(0.3),), controller:nameController ,),
                               const SizedBox(height: 12,),
                               MaterialTextFieldPassword(lable: tr("Password"),controller:passwordController ,prefIcon: Icon(Icons.mail,color: Colors.black.withOpacity(0.3)),),
                               const SizedBox(height: 12,),
-                              Align(
-                                alignment:Alignment.bottomRight,
-                                child: InkWell(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, FORGET_PASSWORD_PAGE);
-                                    },
-                                    child:  Text("Forget Password?",style: TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w300),).tr()
-                                ),
-                              ),
+                              MaterialTextFieldPassword(lable: tr("Confirm Password"),controller:confirmPasswordController ,prefIcon: Icon(Icons.mail,color: Colors.black.withOpacity(0.3)),),
+
                               Container(
                                 width: MediaQuery.of(context).size.width,
                                 margin: EdgeInsets.only(top: 10),
@@ -145,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() {
                                       validate = true;
                                       progressButtonState = ButtonState.loading;
-                                      BlocProvider.of<LoginCubit>(context).logIn(emilController.text,passwordController.text);
+                                      BlocProvider.of<LoginCubit>(context).SignUp(emilController.text,nameController.text,passwordController.text,confirmPasswordController.text);
                                     });
                                   }
                                 },),
@@ -154,13 +120,13 @@ class _LoginPageState extends State<LoginPage> {
                               InkWell(
                                   onTap: () {
                                     // logOut(context);
-                                    Navigator.pushNamed(context, SIGNUP_PAGE);
+                                    Navigator.restorablePopAndPushNamed(context, LOGIN_PAGE);
                                   },
                                   child:RichText(
                                     text: TextSpan(
                                       children: <TextSpan>[
-                                        TextSpan(text: 'Dont’t have an account?  ', style: TextStyle(fontWeight: FontWeight.w300,fontSize: 12,color: Colors.black.withOpacity(0.5))),
-                                        TextSpan(text: 'Sign up', style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12,color: Colors.black.withOpacity(0.5))),
+                                        TextSpan(text: 'Have an account?  ', style: TextStyle(fontWeight: FontWeight.w300,fontSize: 12,color: Colors.black.withOpacity(0.5))),
+                                        TextSpan(text: 'Login', style: TextStyle(fontWeight: FontWeight.w600,fontSize: 12,color: Colors.black.withOpacity(0.5))),
                                       ],
                                     ),
                                   )
@@ -179,4 +145,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+void logOut(BuildContext context) async {
+  var users = await Hive.openBox('users');
+  users.clear();
+  Navigator.pushReplacementNamed(context, LOGIN_PAGE);
 }

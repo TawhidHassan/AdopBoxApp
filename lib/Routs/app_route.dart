@@ -2,6 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Bloc/Login/login_cubit.dart';
+import '../Constants/Strings/app_strings.dart';
+import '../Presentation/Pages/Login/login_page.dart';
+import '../Presentation/Pages/Login/signup_page.dart';
+import '../Presentation/Screens/SplashScreen/splash_screen.dart';
+
 
 
 class AppRouter {
@@ -9,8 +15,19 @@ class AppRouter {
     final Map? args = settings.arguments as Map?;
     switch (settings.name) {
       case "/":
-        return MaterialPageRoute(builder: (_) => Container());
-
+        return MaterialPageRoute(builder: (_) => SplashScreen());
+      case LOGIN_PAGE:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => BlocProvider(
+              create: (context) => LoginCubit(),
+              child: LoginPage(),
+            ));
+      case SIGNUP_PAGE:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => BlocProvider(
+              create: (context) => LoginCubit(),
+              child: SignUpPage(),
+            ));
 
       default:
         return MaterialPageRoute(

@@ -1,6 +1,6 @@
 //base url of api
 //staging
-const BASE_URL = "https://issuetrackermaac.herokuapp.com/api/v1/";
+const BASE_URL = "https://blooming-taiga-30009.herokuapp.com/api/v1/";
 const BASE_URL_IMAGE = "https://staging-brandactivation.sgp1.digitaloceanspaces.com/";
 
 
@@ -12,6 +12,7 @@ const BASE_URL_IMAGE = "https://staging-brandactivation.sgp1.digitaloceanspaces.
 const MAIN_PAGE = "/main_page";
 const HOME_PAGE = "/home_page";
 const LOGIN_PAGE = "/login_page";
+const SIGNUP_PAGE = "/SIGNUP_PAGE";
 const FORGET_PASSWORD_PAGE = "/forget_pass_page";
 
 

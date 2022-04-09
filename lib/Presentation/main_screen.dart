@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 
 import '../Constants/Colors/app_colors.dart';
+import '../Constants/Strings/app_strings.dart';
 import '../Service/LocalDataBase/localdata.dart';
 import 'Pages/Home/home_page.dart';
 
@@ -73,12 +75,17 @@ class _MainScreenState extends State<MainScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(name ?? "",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w900,
-                                color: Colors.white,
-                              )),
+                          InkWell(
+                            onTap: (){
+                              logOut(context);
+                            },
+                            child: Text(name ?? "",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
+                                )),
+                          ),
                           SizedBox(
                             height: 6,
                           ),
@@ -110,4 +117,9 @@ class _MainScreenState extends State<MainScreen> {
           body: HomePage(),
         )));
   }
+}
+void logOut(BuildContext context) async {
+  var users = await Hive.openBox('users');
+  users.clear();
+  Navigator.pushReplacementNamed(context, LOGIN_PAGE);
 }

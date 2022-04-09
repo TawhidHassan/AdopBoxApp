@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF1B3F73);
+const kPrimaryColor = Color(0xFFFFDD99);
 const kPrimaryColorShade = Color(0xFFE0EEFF);
 const kPrimaryLightColor = Color(0xFFF2F7FF);
 const whiteBackground = Color(0xFFffffff);
@@ -12,17 +12,17 @@ const textFieldBorder = Color(0xFF94A3B8);
 const Color myColor = Color(0xff123456);
 
 const MaterialColor kPrimaryColorx = const MaterialColor(
-  0xFF1B3F73,
+  0xFFFFDD99,
   const <int, Color>{
-    50: const Color(0xFF1B3F73),
-    100: const Color(0xFF1B3F73),
-    200: const Color(0xFF1B3F73),
-    300: const Color(0xFF1B3F73),
-    400: const Color(0xFF1B3F73),
-    500: const Color(0xFF1B3F73),
-    600: const Color(0xFF1B3F73),
-    700: const Color(0xFF1B3F73),
-    800: const Color(0xFF1B3F73),
-    900: const Color(0xFF1B3F73),
+    50: const Color(0xFFFFDD99),
+    100: const Color(0xFFFFDD99),
+    200: const Color(0xFFFFDD99),
+    300: const Color(0xFFFFDD99),
+    400: const Color(0xFFFFDD99),
+    500: const Color(0xFFFFDD99),
+    600: const Color(0xFFFFDD99),
+    700: const Color(0xFFFFDD99),
+    800: const Color(0xFFFFDD99),
+    900: const Color(0xFFFFDD99),
   },
 );

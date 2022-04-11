@@ -46,76 +46,103 @@ class _MainScreenState extends State<MainScreen> {
         color: kPrimaryColorx,
         child: SafeArea(
             child: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Color(0xFF1B3F73),
-            elevation: 0,
-            toolbarHeight: 110,
-            leading: Container(
-              margin: EdgeInsets.only(top: 4, bottom: 4, left: 16,right: 6),
-              width: 200,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.asset("assets/images/logox.jpg"),
-                ),
-              ),
-            ),
-            actions: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 9,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              logOut(context);
-                            },
-                            child: Text(name ?? "",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white,
-                                )),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            email ?? " ",
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Color(0xFFFFEBC2),
+                elevation: 0,
+                toolbarHeight: 52,
+                leading: Container(
+                  margin: EdgeInsets.only(top: 4, bottom: 4, left: 16,right: 6),
+                  width: 200,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset("assets/images/logox.jpg"),
                     ),
-                    // Expanded(
-                    //   flex: 1,
-                    //   child: GestureDetector(
-                    //     onTap: () {
-                    //       // Navigator.pushNamed(context, SURVEY_FIRST_PAGE);
-                    //     },
-                    //     child: SvgPicture.asset('assets/icons/sms.svg')
-                    //   ),
-                    // ),
-                  ],
+                  ),
                 ),
+                actions: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 8,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                onTap: (){
+                                  logOut(context);
+                                },
+                                child: Text(name ?? "",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w900,
+                                      color: Color(0xFF807661),
+                                    )),
+                              ),
+                              SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                email ?? " ",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                            flex: 4,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(4),
+                                  height: 23,
+                                  width: 23,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFFFDD99),
+                                      borderRadius: BorderRadius.circular(4)
+                                  ),
+                                  child: SvgPicture.asset("assets/icons/msg.svg"),
+                                ),Container(
+                                  padding: EdgeInsets.all(4),
+                                  height: 23,
+                                  width: 23,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFFFDD99),
+                                      borderRadius: BorderRadius.circular(4)
+                                  ),
+                                  child: SvgPicture.asset("assets/icons/heart.svg"),
+                                ),Container(
+                                  padding: EdgeInsets.all(4),
+                                  height: 23,
+                                  width: 23,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFFF8484),
+                                      borderRadius: BorderRadius.circular(4)
+                                  ),
+                                  child: SvgPicture.asset("assets/icons/logout.svg"),
+                                ),
+                              ],
+                            )
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          body: HomePage(),
-        )));
+              body: HomePage(),
+            )));
   }
 }
 void logOut(BuildContext context) async {

@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 
 import '../../../Constants/Strings/app_strings.dart';
+import '../../../Data/Model/Categories/categories.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
 import '../../Pages/SetUpPreference/preference_setup_page.dart';
 import '../../main_screen.dart';
@@ -51,11 +53,17 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       });
     }
   }
-
+  List<Categories> catList = [];
+  boxOpe()async{
+    var box = await Hive.openBox<Categories>('categories');
+    print("open");
+    catList = box.values.toList();
+  }
 
   @override
   void initState() {
     super.initState();
+    boxOpe();
     checkLogin();
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
@@ -85,9 +93,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     Timer(Duration(seconds: 4), () {
       setState(() {
+
         isLogin?
-        Navigator.pushReplacement(context, PageTransition(PetSetupPage())): Navigator.pushReplacementNamed(
-            context, LOGIN_PAGE);
+          catList.isEmpty?Navigator.pushReplacement(context, PageTransition(PetSetupPage())):
+            Navigator.pushReplacement(context, PageTransition(MainScreen())): Navigator.pushReplacementNamed(context, LOGIN_PAGE);
         // isLogin?
         // Navigator.pushReplacement(context, PageTransition(MainScreen())):Navigator.pushReplacement(context, PageTransition(MainScreen()));
       });

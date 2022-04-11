@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 backgroundColor: Colors.white,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(50),
-                  child: Image.asset("assets/images/user.png"),
+                  child: Image.asset("assets/images/logox.jpg"),
                 ),
               ),
             ),
@@ -100,15 +100,15 @@ class _MainScreenState extends State<MainScreen> {
                         ],
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          // Navigator.pushNamed(context, SURVEY_FIRST_PAGE);
-                        },
-                        child: SvgPicture.asset('assets/icons/sms.svg')
-                      ),
-                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: GestureDetector(
+                    //     onTap: () {
+                    //       // Navigator.pushNamed(context, SURVEY_FIRST_PAGE);
+                    //     },
+                    //     child: SvgPicture.asset('assets/icons/sms.svg')
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

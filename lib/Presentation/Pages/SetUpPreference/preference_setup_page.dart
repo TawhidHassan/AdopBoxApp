@@ -6,14 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:progress_state_button/progress_button.dart';
 
 import 'package:dotted_line/dotted_line.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
 import '../../../Utils/RandomColor/random_color.dart';
+import '../../Screens/SplashScreen/splash_screen.dart';
 import '../../Widgets/Button/custom_btn.dart';
 import '../../Widgets/Card/PrefCard/prefer_card.dart';
 import '../../Widgets/TextFields/normal_textdield.dart';
+import '../../main_screen.dart';
 class PetSetupPage extends StatefulWidget {
   const PetSetupPage({Key? key}) : super(key: key);
 
@@ -46,14 +49,19 @@ class _PetSetupPageState extends State<PetSetupPage> {
     List<Placemark> placemarks = await placemarkFromCoordinates(possition.latitude, possition.longitude);
     print(placemarks[0].name.toString());
     setState(()  {
-      addressController.text=placemarks[0].street.toString()
-          +","+placemarks[0].locality.toString()+","+placemarks[0].postalCode.toString()
+      addressController.text=placemarks[0].locality.toString()+","+placemarks[0].postalCode.toString()
           +","+placemarks[0].subLocality.toString()
           +","+placemarks[0].subAdministrativeArea.toString();
     });
   }
 
+  addItem(Categories item) async {
+    print(item);
+    var box = await Hive.openBox<Categories>('categories');
+    box.add(item);
 
+    print(box);
+  }
 
 
   @override
@@ -202,6 +210,7 @@ class _PetSetupPageState extends State<PetSetupPage> {
                     addressController.text==""?Container(child: Text("getting your location please wait"),): pickedCategory.length<1?Container(): InkWell(
                         onTap: (){
                           // Navigator.pushNamed(context, '/home');
+                          saveCategories(pickedCategory);
                         },
                         child: CustomBtn()),
                     SizedBox(height: 10),
@@ -212,6 +221,13 @@ class _PetSetupPageState extends State<PetSetupPage> {
           )
       ),
     );
+  }
+
+  void saveCategories(List<Categories> pickedCategory) {
+    for(Categories d in pickedCategory){
+      addItem(d);
+    }
+    Navigator.pushReplacement(context, PageTransition(MainScreen()));
   }
 }
 

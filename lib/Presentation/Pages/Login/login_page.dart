@@ -1,3 +1,4 @@
+import 'package:adopbox/Presentation/main_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:progress_state_button/progress_button.dart';
 import '../../../Bloc/Login/login_cubit.dart';
 import '../../../Constants/Strings/app_strings.dart';
+import '../../../Data/Model/Categories/categories.dart';
 import '../../../Service/LoginService/save_user_data_local.dart';
 import '../../Screens/SplashScreen/splash_screen.dart';
 import '../../Widgets/Button/ProgressAnimtaionButton/progress_button.dart';
@@ -33,11 +35,17 @@ class _LoginPageState extends State<LoginPage> {
   //local dataBase
   Box? users;
   LoginDataSave? loginDataSave;
-
+  List<Categories> catList = [];
+  boxOpe()async{
+    var box = await Hive.openBox<Categories>('categories');
+    print("open");
+    catList = box.values.toList();
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    boxOpe();
     users =Hive.box('users');
     loginDataSave=LoginDataSave();
 
@@ -66,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
           }else{
             loginDataSave?.storeTokenUserdata(users,data.token, data.user!.id, data.user!.name, data.user!.email, data.user!.role);
             // Navigator.pushReplacement(context, PageTransition(PetSetupPage()));
-            Navigator.pushReplacementNamed(context, SETUP_PREFERANCE);
+            catList.isEmpty?
+            Navigator.pushReplacementNamed(context, SETUP_PREFERANCE): Navigator.pushReplacement(context, PageTransition(MainScreen()));
           }
         }
       },

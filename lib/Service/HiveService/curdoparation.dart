@@ -3,6 +3,7 @@ import 'package:hive/hive.dart';
 import '../../Data/Model/Categories/categories.dart';
 
 class HiveOparation{
+
   addItem(Categories item) async {
     print(item);
     var box = await Hive.openBox<Categories>('categories');

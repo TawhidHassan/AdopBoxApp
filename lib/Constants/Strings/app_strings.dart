@@ -18,3 +18,6 @@ const FORGET_PASSWORD_PAGE = "/forget_pass_page";
 
 //setupApp
 const SETUP_PREFERANCE = "/SETUP_PREFERANCE";
+
+//intro page
+const INTRO_PAGE = "/INTRO_PAGE";

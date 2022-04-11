@@ -33,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   //storage instance
   LocalDataGet _localDataGet=new LocalDataGet();
-
+  Box? introBox;
+  List<Categories> catList = [];
 
   String page =HOME_PAGE;
   bool isLogin=false;
@@ -53,12 +54,14 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       });
     }
   }
-  List<Categories> catList = [];
+
   boxOpe()async{
+    introBox = await Hive.openBox('intro');
     var box = await Hive.openBox<Categories>('categories');
     print("open");
     catList = box.values.toList();
   }
+
 
   @override
   void initState() {
@@ -93,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
     Timer(Duration(seconds: 4), () {
       setState(() {
-
+        introBox!.isEmpty?Navigator.pushReplacementNamed(context, INTRO_PAGE):
         isLogin?
           catList.isEmpty?Navigator.pushReplacement(context, PageTransition(PetSetupPage())):
             Navigator.pushReplacement(context, PageTransition(MainScreen())): Navigator.pushReplacementNamed(context, LOGIN_PAGE);

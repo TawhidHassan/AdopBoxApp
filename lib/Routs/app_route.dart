@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Bloc/Categories/categories_cubit.dart';
 import '../Bloc/Login/login_cubit.dart';
 import '../Constants/Strings/app_strings.dart';
+import '../Presentation/Pages/IntroPage/intro_page.dart';
 import '../Presentation/Pages/Login/login_page.dart';
 import '../Presentation/Pages/Login/signup_page.dart';
 import '../Presentation/Pages/SetUpPreference/preference_setup_page.dart';
@@ -37,6 +38,9 @@ class AppRouter {
               create: (context) => CategoriesCubit(),
               child: PetSetupPage(),
             ));
+      case INTRO_PAGE:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => IntroPage());
 
       default:
         return MaterialPageRoute(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
+import 'Componenet/search_compo.dart';
+import 'Componenet/slider_home.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -21,7 +23,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,8 +38,9 @@ class _HomePageState extends State<HomePage> {
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-
+          children:  [
+            SearchComponent(),
+            HomeSliderComponent()
           ],
         ),
       ),

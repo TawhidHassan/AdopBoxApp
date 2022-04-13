@@ -37,7 +37,7 @@ dependencies:
   flutter_bloc:
   equatable:
   shimmer: ^2.0.0
-
+  smooth_page_indicator: ^1.0.0+2
   liquid_swipe: ^2.1.0
   lottie: ^1.2.1
   flutter_svg: ^0.22.0

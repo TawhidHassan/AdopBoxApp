@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
+import 'Componenet/category_section.dart';
 import 'Componenet/search_compo.dart';
 import 'Componenet/slider_home.dart';
 class HomePage extends StatefulWidget {
@@ -40,7 +41,8 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
             SearchComponent(),
-            HomeSliderComponent()
+            HomeSliderComponent(),
+            CategorySection()
           ],
         ),
       ),

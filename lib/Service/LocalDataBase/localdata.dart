@@ -7,7 +7,7 @@ class LocalDataGet{
     if(users.get('token')==null){
       print("hive ");
     }else{
-      print("hive "+users.get('token'));
+      // print("hive "+users.get('token'));
     }
 
     return users;

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Bloc/Categories/categories_cubit.dart';
 import '../Bloc/Login/login_cubit.dart';
 import '../Constants/Strings/app_strings.dart';
+import '../Presentation/Pages/CategoryPage/all_category_page.dart';
 import '../Presentation/Pages/IntroPage/intro_page.dart';
 import '../Presentation/Pages/Login/login_page.dart';
 import '../Presentation/Pages/Login/signup_page.dart';
@@ -41,6 +42,9 @@ class AppRouter {
       case INTRO_PAGE:
         return MaterialPageRoute(
             builder: (BuildContext context) => IntroPage());
+      case ALL_CATEGORIES:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => AllCategoryPage(categories: args!["categories"],));
 
       default:
         return MaterialPageRoute(

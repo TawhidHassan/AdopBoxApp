@@ -21,3 +21,6 @@ const SETUP_PREFERANCE = "/SETUP_PREFERANCE";
 
 //intro page
 const INTRO_PAGE = "/INTRO_PAGE";
+
+//categories
+const ALL_CATEGORIES = "/ALL_CATEGORIES";

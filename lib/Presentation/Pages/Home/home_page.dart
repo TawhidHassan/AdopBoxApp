@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../Service/LocalDataBase/localdata.dart';
 import 'Componenet/category_section.dart';
 import 'Componenet/featcher_category_post.dart';
+import 'Componenet/rescue_section.dart';
 import 'Componenet/search_compo.dart';
 import 'Componenet/slider_home.dart';
 class HomePage extends StatefulWidget {
@@ -46,6 +47,7 @@ class _HomePageState extends State<HomePage> {
             CategorySection(),
             CategoriWiseFeatcherPostSection(),
             CategoriWiseFeatcherPostSection(),
+            RescueSection(),
             SizedBox(height: 25,)
           ],
         ),

@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hive/hive.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../Constants/Colors/app_colors.dart';
 import '../Constants/Strings/app_strings.dart';
@@ -18,6 +20,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  PersistentTabController controller = PersistentTabController(initialIndex: 0);
+
   String? name;
   String? email;
 
@@ -38,6 +42,46 @@ class _MainScreenState extends State<MainScreen> {
     // TODO: implement initState
     super.initState();
     getToken();
+  }
+  List<Widget> _buildScreens() {
+    return [
+      HomePage(),
+      HomePage(),
+      HomePage(),
+      HomePage(),
+      HomePage(),
+    ];
+  }
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.home),
+        title: ("Home"),
+        activeColorPrimary: kPrimaryColorx,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.money_rubl_circle),
+        title: ("Blog"),
+        activeColorPrimary: kPrimaryColorx,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.add,color: Colors.white,),
+        title: ("Add"),
+        activeColorPrimary: kPrimaryColorx,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.location),
+        title: ("Vet"),
+        activeColorPrimary: kPrimaryColorx,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),PersistentBottomNavBarItem(
+        icon: Icon(CupertinoIcons.settings),
+        title: ("Settings"),
+        activeColorPrimary: kPrimaryColorx,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+    ];
   }
 
   @override
@@ -141,7 +185,35 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 ],
               ),
-              body: HomePage(),
+              body:PersistentTabView(
+                context,
+                controller: controller,
+                screens: _buildScreens(),
+                items: _navBarsItems(),
+                confineInSafeArea: false,
+                backgroundColor: Colors.white, // Default is Colors.white.
+                handleAndroidBackButtonPress: true, // Default is true.
+                resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+                stateManagement: true, // Default is true.
+                hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+                decoration: NavBarDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  colorBehindNavBar: Color(0XFFFCFCFC),
+                ),
+                popAllScreensOnTapOfSelectedTab: true,
+                popActionScreens: PopActionScreensType.all,
+                itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.ease,
+                ),
+                screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
+                  animateTabTransition: true,
+                  curve: Curves.ease,
+                  duration: Duration(milliseconds: 200),
+                ),
+                navBarStyle: NavBarStyle.style16, // Choose the nav bar style with this property.
+              ) ,
+
             )));
   }
 }

@@ -94,7 +94,7 @@ class _CategorySectionState extends State<CategorySection> {
                       "categories":data?.category
                     });
                   },
-                  child: SvgPicture.asset("assets/images/seemore.svg",)),
+                  child: SvgPicture.asset("assets/images/seemore.svg",width: MediaQuery.of(context).size.width,)),
             ],
           ),
         ),
